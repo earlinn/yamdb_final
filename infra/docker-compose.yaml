@@ -7,7 +7,7 @@ services:
     env_file:
       - ./.env
   web:
-    build: ../api_yamdb
+    image: earlinn/api_yamdb:v.02.07.2022
     restart: always
     volumes:
       - static_value:/app/static/
