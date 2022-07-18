@@ -99,5 +99,4 @@ class TitleListAndRetrieveSerializer(serializers.ModelSerializer):
 
     def get_rating(self, obj):
         title_reviews = obj.reviews.all()
-        rating = title_reviews.aggregate(Avg('score'))['score__avg']
-        return rating
+        return title_reviews.aggregate(Avg('score'))['score__avg']

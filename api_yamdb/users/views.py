@@ -1,13 +1,12 @@
 import random
 
 from django.shortcuts import get_object_or_404
-from rest_framework_simplejwt.views import TokenObtainPairView
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import BasePermission, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import User
 from .serializers import UserSerializer, VerifyCodeTokenObtainPairSerializer
@@ -52,6 +51,7 @@ class UserSignupView(APIView):
             if serializer.is_valid(raise_exception=True):
                 serializer.save(password=verify_code)
             return Response(request.data)
+        return None
 
 
 class VerifyCodeTokenObtainPairView(TokenObtainPairView):
@@ -101,6 +101,7 @@ class UsersView(APIView, PageNumberPagination):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return None
 
     def get(self, request):
         users = User.objects.get_queryset().order_by('username')
@@ -123,6 +124,7 @@ class UsernameView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+        return None
 
     def delete(self, request, username):
         user = get_object_or_404(User, username=username)
@@ -152,3 +154,4 @@ class SelfUserView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+        return None

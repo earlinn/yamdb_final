@@ -45,3 +45,4 @@ class IsAdminUserOrReadOnly(BasePermission):
             return True
         if request.user.is_authenticated:
             return request.user.role == 'admin' or request.user.is_superuser
+        return False

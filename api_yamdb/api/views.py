@@ -1,24 +1,21 @@
+from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as rf_filters
 from rest_framework import filters, generics, viewsets
-from django.shortcuts import get_object_or_404
-
 from reviews.models import Comment, Review
 from titles.models import Category, Genre, Title
+
 from .mixins import ReviewCommentMixin
 from .permissions import IsAdminUserOrReadOnly
-from .serializers import (
-    CategorySerializer, CommentSerializer,
-    GenreSerializer, ReviewSerializer,
-    TitleSerializer, TitleListAndRetrieveSerializer
-)
+from .serializers import (CategorySerializer, CommentSerializer,
+                          GenreSerializer, ReviewSerializer,
+                          TitleListAndRetrieveSerializer, TitleSerializer)
 
 
 class ReviewViewSet(ReviewCommentMixin):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        queryset = Review.objects.filter(title__id=self.kwargs.get('title_id'))
-        return queryset
+        return Review.objects.filter(title__id=self.kwargs.get('title_id'))
 
     def perform_create(self, serializer):
         title = get_object_or_404(Title, pk=self.kwargs.get('title_id'))
@@ -29,10 +26,7 @@ class CommentViewSet(ReviewCommentMixin):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        queryset = Comment.objects.filter(
-            review__id=self.kwargs.get('review_id')
-        )
-        return queryset
+        return Comment.objects.filter(review__id=self.kwargs.get('review_id'))
 
     def perform_create(self, serializer):
         title_id = self.kwargs.get('title_id')
