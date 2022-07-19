@@ -4,7 +4,7 @@ from django.db import models
 
 class User(AbstractUser):
     bio = models.TextField(
-        'Биография',
+        'Biography',
         blank=True,
     )
     email = models.EmailField(
