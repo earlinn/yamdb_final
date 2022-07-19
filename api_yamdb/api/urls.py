@@ -18,9 +18,9 @@ router.register(
 )
 
 urlpatterns = [
-    path('v1/categories/', APICategoryList.as_view()),
-    path('v1/categories/<slug:slug>/', APICategoryDestroy.as_view()),
-    path('v1/genres/', APIGenreList.as_view()),
-    path('v1/genres/<slug:slug>/', APIGenreDestroy.as_view()),
-    path('v1/', include(router.urls)),
+    path('categories/', APICategoryList.as_view()),
+    path('categories/<slug:slug>/', APICategoryDestroy.as_view()),
+    path('genres/', APIGenreList.as_view()),
+    path('genres/<slug:slug>/', APIGenreDestroy.as_view()),
+    path('', include(router.urls)),
 ]
