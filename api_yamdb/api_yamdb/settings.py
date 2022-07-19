@@ -15,7 +15,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', default='key')
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '130.193.52.90'
+    '*'
 ]
 
 
