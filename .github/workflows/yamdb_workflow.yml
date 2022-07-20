@@ -18,9 +18,11 @@ jobs:
           pip install flake8 pep8-naming flake8-broken-line flake8-return flake8-isort
           cd api_yamdb
           pip install -r requirements.txt
-      - name: Test with flake8 and django tests
+      - name: Test with flake8
         run: |
           python -m flake8
+      - name: Test with pytest
+        run: |
           pytest
 
   build_and_push_to_docker_hub:
@@ -57,9 +59,9 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
+            sudo docker pull earlinn/api_yamdb:latest
             sudo docker-compose stop
             sudo docker-compose rm web
-            sudo docker pull earlinn/api_yamdb:v.02.07.2022
             touch .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env
