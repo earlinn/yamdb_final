@@ -142,14 +142,12 @@ class SelfUserView(APIView):
 
     def patch(self, request):
         user = request.user
-        data = request.data.dict()
+        data = request.data
         if 'role' in data:
-            print(data)
             if user.role == 'moderator' and data['role'] == 'admin':
                 data['role'] = 'moderator'
             elif user.role == 'user':
                 data['role'] = 'user'
-        print(data)
         serializer = UserSerializer(user, data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
