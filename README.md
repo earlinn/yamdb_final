@@ -110,12 +110,20 @@ docker-compose start
 
 Заменить IP-адрес в infra/nginx/default.conf, на Github в разделе 
 settings/secrets/actions (переменная HOST), а также в последней строке 
-данного README.
+данного README и файле settings.py (если там указан IP).
 
 Зайти на сервер и остановить службу nginx командой:
 ```
 sudo systemctl stop nginx 
 ```
+Обновить на сервере файлы docker-compose.yml и nginx/default.conf, если в них 
+были изменения. Для этого нужно в терминале локального компьютера (не сервера) 
+выполнить команды:
+```
+scp -r /{имя диска}/{путь к папке}/yamdb_final/infra/docker-compose.yml {имя пользователя}@{публичный IPv4}:~/ # копирует файл docker-compose.yml в домашнюю директорию на сервере
+scp -r /{имя диска}/{путь к папке}/yamdb_final/infra/nginx/default.conf {имя пользователя}@{публичный IPv4}:/home/{имя пользователя}/nginx/ # копирует файл default.conf в папку /nginx/ домашней директории на сервере
+```
+
 Сделать коммит, зайти на вкладку Actions репозитория на GitHub и проверить, 
 что workflow запустился и выполнил все jobs.
 
